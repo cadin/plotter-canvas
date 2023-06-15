@@ -130,7 +130,7 @@ void drawSaveIndicator() {
 void saveImage() {
     int _canvasW = canvasW;
     int _canvasH = canvasH;
-    if(USE_RETINA){
+    if(useRetinaDisplay){
         _canvasW *= 2;
         _canvasH *= 2;
     }
