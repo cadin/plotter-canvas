@@ -1,20 +1,5 @@
 import processing.svg.*;
 
-// SCREEN SCALES
-float MACBOOK_15_SCALE = 0.4912;
-float MACBOOK_13_SCALE = 0.5;
-float LG_DISPLAY_SCALE = 0.366;
-
-// PEN SIZES  (MM)
-float RAPIDOGRAPH_0 = 0.35;
-float RAPIDOGRAPH_7 = 2.0;
-float BIC_INTENSITY = 0.5;
-float POSCA_3M = 1.2;
-float POSCA_5M = 2.4;
-float PILOT_V5 = 0.5;
-float PILOT_V7 = 0.7;
-
-// APP VARS
 int canvasX = 0;
 int canvasY = 0;
 int canvasW = 0;
@@ -38,29 +23,29 @@ boolean showGrid = false;
 
 void settings() {
 	
-    if(FULLSCREEN) {
+    if(fullscreen) {
     	fullScreen();
     } else {
         size(displayWidth, displayHeight - 45);
 	    // size(1920, 1080);
     }
-	if(USE_RETINA){
+	if(useRetinaDisplay){
 		pixelDensity(displayDensity());
 	}
 }
 
 void setup() {
-    maxScreenScale = _screenSize * 300 / printResolution;
-    penSizeMM = _penSize;
-    printWInches = _printW;
-    printHInches = _printH;
+    maxScreenScale = displayScale * 300 / printResolution;
+    penSizeMM = penSize;
+    printWInches = printW;
+    printHInches = printH;
 
     sketch = new Sketch();
 
     updateKeyDimensions();
 
     imgSaver = new ImageSaver();
-    imgSaver.savePNG = _savePNGPreview;
+    imgSaver.savePNG = savePNGPreview;
 }
 
 
@@ -98,12 +83,12 @@ void calculateScreenScale() {
     float maxW = width - 100;
     float maxH = height - 100;
     
-    float printW = printWInches * printResolution;
-    float printH = printHInches * printResolution;
-    screenScale = maxW / printW;
+    float _printW = printWInches * printResolution;
+    float _printH = printHInches * printResolution;
+    screenScale = maxW / _printW;
     
     if(printH * screenScale > maxH){
-        screenScale = maxH / printH;
+        screenScale = maxH / _printH;
     }
     
     if(screenScale > maxScreenScale){
