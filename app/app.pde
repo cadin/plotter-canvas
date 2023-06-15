@@ -87,7 +87,7 @@ void calculateScreenScale() {
     float _printH = printHInches * printResolution;
     screenScale = maxW / _printW;
     
-    if(printH * screenScale > maxH){
+    if(_printH * screenScale > maxH){
         screenScale = maxH / _printH;
     }
     
