@@ -3,7 +3,11 @@ class Sketch {
     int h; // height in pixels
     float ppi; // pixels per inch of printed doc
 
-    Sketch() {}
+    Sketch(int _w, int _h, float _ppi) {
+        w = _w;
+        h = _h;
+        ppi = _ppi;
+    }
 
     void setDimensions(int _w, int _h, float _ppi) {
         w = _w;

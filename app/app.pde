@@ -40,9 +40,8 @@ void setup() {
     printWInches = printW;
     printHInches = printH;
 
-    sketch = new Sketch();
-
     updateKeyDimensions();
+    sketch = new Sketch(canvasW, canvasH, printResolution * screenScale);
 
     imgSaver = new ImageSaver();
     imgSaver.savePNG = savePNGPreview;
@@ -57,7 +56,10 @@ void updateKeyDimensions() {
     println("scaled to: " + canvasW + " ✕ " + canvasH + " pixels\n");
 
     grid = new GraphPaper(printWInches, printHInches, printResolution * screenScale);
-    sketch.setDimensions(canvasW, canvasH, printResolution * screenScale);
+
+    if(sketch != null) {
+        sketch.setDimensions(canvasW, canvasH, printResolution * screenScale);
+    }
 }
 
 
