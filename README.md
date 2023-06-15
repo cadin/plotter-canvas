@@ -4,7 +4,7 @@ An empty canvas for building plotter art in Processing.
 
 This projects runs full screen (optional) with a proportional canvas showing your sketch in context of the target print size. Output your sketch as plot-ready SVG with optional PNG preview.
 
-## Getting Setup
+## Getting Started
 
 ### Requirements
 
