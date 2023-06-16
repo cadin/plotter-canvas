@@ -20,6 +20,11 @@ ImageSaver imgSaver;
 GraphPaper grid;
 boolean showGrid = false;
 
+int plotW;
+int plotH;
+int plotX;
+int plotY;
+
 
 void settings() {
 	
@@ -41,7 +46,7 @@ void setup() {
     printHInches = printH;
 
     updateKeyDimensions();
-    sketch = new Sketch(canvasW, canvasH, printResolution * screenScale);
+    sketch = new Sketch(plotW, plotH, printResolution * screenScale);
 
     imgSaver = new ImageSaver();
     imgSaver.savePNG = savePNGPreview;
@@ -50,15 +55,15 @@ void setup() {
 
 void updateKeyDimensions() {
     calculateScreenScale();
+    calculatePlotArea();
     strokeWeight = calculateStrokeSize();
 
     println("page size: " + printWInches + " ✕ " + printHInches + " inches");
     println("scaled to: " + canvasW + " ✕ " + canvasH + " pixels\n");
 
-    grid = new GraphPaper(printWInches, printHInches, printResolution * screenScale);
-
-    if(sketch != null) {
-        sketch.setDimensions(canvasW, canvasH, printResolution * screenScale);
+    grid = new GraphPaper(maxPlotW, maxPlotH, printWInches, printHInches, printResolution * screenScale);
+    if(sketch != null){
+        sketch.setDimensions(plotW, plotH, printResolution * screenScale);
     }
 }
 
@@ -67,11 +72,13 @@ void draw() {
     drawBG();
     translate(canvasX, canvasY);
     if(showGrid) grid.draw();
+
+    translate(plotX, plotY);
     
     imgSaver.startSave();
 
     strokeWeight(strokeWeight / screenScale);
-    sketch.draw(strokeWeight);
+    sketch.draw(strokeWeight / screenScale);
 
     imgSaver.endSave(this.g, canvasX, canvasY, canvasW, canvasH); 
 }
@@ -87,6 +94,7 @@ void calculateScreenScale() {
     
     float _printW = printWInches * printResolution;
     float _printH = printHInches * printResolution;
+
     screenScale = maxW / _printW;
     
     if(_printH * screenScale > maxH){
@@ -102,6 +110,20 @@ void calculateScreenScale() {
     
     canvasX = (width - canvasW) /2;
     canvasY = (height - canvasH) /2;
+}
+
+void calculatePlotArea() {
+    if(constrainToPlotArea){
+        plotW = int(min(printWInches, maxPlotW) * printResolution * screenScale);
+        plotH = int(min(printHInches, maxPlotH) * printResolution * screenScale);
+        plotX = (canvasW - plotW) / 2;
+        plotY = (canvasH - plotH) / 2;
+    } else {
+        plotW = canvasW;
+        plotH = canvasH;
+        plotX = 0;
+        plotY = 0;
+    }
 }
 
 void drawPaperBG() {

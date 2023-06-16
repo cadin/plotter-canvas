@@ -24,8 +24,13 @@ boolean fullscreen = true;
 float displayScale = MACBOOK_13_SCALE;
 
 // PRINT SETTINGS (in inches)
-float printW = 14;
-float printH = 17;
+float printW = 17;
+float printH = 14;
+
+// PLOTTER SETTINGS (in inches)
+float maxPlotW = 17;
+float maxPlotH = 11;
+boolean constrainToPlotArea = false;
 
 // pen thickness (in mm)
 float penSize = POSCA_3M; 

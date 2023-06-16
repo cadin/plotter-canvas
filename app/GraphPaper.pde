@@ -1,8 +1,8 @@
 class GraphPaper {
 
     // max plotter dimensions in inches
-    float maxW = 17.0;
-    float maxH = 11.0;
+    float maxW;
+    float maxH;
 
     // offset to center grid on paper
     float x = 0;
@@ -10,7 +10,10 @@ class GraphPaper {
 
     float ppi;
 
-    GraphPaper(float _w, float _h, float _ppi) {
+    GraphPaper(float _maxW, float _maxH, float _w, float _h, float _ppi) {
+        maxW = _maxW;
+        maxH = _maxH;
+
         if(_h > _w) setPortrait();
         
         maxW = min(maxW, _w);
