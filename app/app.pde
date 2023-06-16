@@ -76,14 +76,13 @@ void draw() {
     translate(plotX, plotY);
     
     imgSaver.startSave();
-
-    strokeWeight(strokeWeight / screenScale);
-    sketch.draw(strokeWeight / screenScale);
+    sketch.draw(strokeWeight);
 
     imgSaver.endSave(this.g, canvasX, canvasY, canvasW, canvasH); 
 }
 
 float calculateStrokeSize() {
+    // 1mm = 0.03937008 inches
     float size = (penSizeMM * 0.03937008) * printResolution * screenScale; 
     return size;
 }
