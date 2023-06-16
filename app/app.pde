@@ -114,8 +114,16 @@ void calculateScreenScale() {
 
 void calculatePlotArea() {
     if(constrainToPlotArea){
-        plotW = int(min(printWInches, maxPlotW) * printResolution * screenScale);
-        plotH = int(min(printHInches, maxPlotH) * printResolution * screenScale);
+        float mpw = maxPlotW;
+        float mph = maxPlotH;
+        if(printWInches < printHInches){
+            // portrait
+            mpw = maxPlotH;
+            mph = maxPlotW;
+        }
+
+        plotW = int(min(printWInches, mpw) * printResolution * screenScale);
+        plotH = int(min(printHInches, mph) * printResolution * screenScale);
         plotX = (canvasW - plotW) / 2;
         plotY = (canvasH - plotH) / 2;
     } else {
