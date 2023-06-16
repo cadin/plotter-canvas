@@ -25,6 +25,9 @@ int plotH;
 int plotX;
 int plotY;
 
+float plotWInches;
+float plotHInches;
+
 
 void settings() {
 	
@@ -71,10 +74,10 @@ void updateKeyDimensions() {
 void draw() {
     drawBG();
     translate(canvasX, canvasY);
+
     if(showGrid) grid.draw();
 
     translate(plotX, plotY);
-    
     imgSaver.startSave();
     sketch.draw(strokeWeight);
 
@@ -121,13 +124,21 @@ void calculatePlotArea() {
             mph = maxPlotW;
         }
 
-        plotW = int(min(printWInches, mpw) * printResolution * screenScale);
-        plotH = int(min(printHInches, mph) * printResolution * screenScale);
+        plotWInches = min(printWInches, mpw);
+        plotHInches = min(printHInches, mph);
+
+        plotW = int(plotWInches * printResolution * screenScale);
+        plotH = int(plotHInches * printResolution * screenScale);
+
         plotX = (canvasW - plotW) / 2;
         plotY = (canvasH - plotH) / 2;
     } else {
         plotW = canvasW;
         plotH = canvasH;
+
+        plotWInches = printWInches;
+        plotHInches = printHInches;
+
         plotX = 0;
         plotY = 0;
     }
@@ -159,13 +170,14 @@ void drawSaveIndicator() {
 }
 
 void saveImage() {
-    int _canvasW = canvasW;
-    int _canvasH = canvasH;
+    int _plotW = plotW;
+    int _plotH = plotH;
     if(useRetinaDisplay){
-        _canvasW *= 2;
-        _canvasH *= 2;
+        _plotW *= 2;
+        _plotH *= 2;
     }
-    imgSaver.begin(printWInches, printHInches, _canvasW, _canvasH);
+
+    imgSaver.begin(plotWInches, plotHInches, _plotW , _plotH);
 }
 
 void keyPressed() {
