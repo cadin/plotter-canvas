@@ -30,14 +30,6 @@ class ImageSaver {
 		} else {
 			state = SaveState.COMPLETE;
 		}
-
-		// if(saveSVG && !didSaveSVG){
-		// 	didSaveSVG = true;
-		// } else if(savePNG && !didSavePNG){
-		// 	didSavePNG = true;
-		// } else {
-		// 	state = SaveState.COMPLETE;
-		// }
 	}
 
 	void update() {
@@ -50,11 +42,9 @@ class ImageSaver {
 				state = SaveState.RENDERING;
 			break;
 			case SAVING:
-				// saveImageData(filename);
 				if(mode == SaveMode.SVG){
 					resizeSVG(filename, printW, printH, canvasW, canvasH);
 				}
-				// state = SaveState.COMPLETE;
 				updateSaveMode();
 			break;
 			case RENDERING:
@@ -102,54 +92,27 @@ class ImageSaver {
 		}
 	}
 
-	void endSave(PGraphics appGraphics, int x, int y, int w, int h) {
+	void endSave(PImage screenImage, int x, int y, int w, int h) {
+		
 		if(state == SaveState.SAVING) {
 			if(mode == SaveMode.SVG){
 				endRecord();
 				println("done!");
 			} else {
-				savePreview(appGraphics, x, y, w, h);
+				savePreview(screenImage, x, y, w, h);
 			}
 		}
 		update();
 	}
 
-	void savePreview(PGraphics appGraphics, int x, int y, int w, int h) {
+	void savePreview(PImage screenImage, int x, int y, int w, int h) {
 		print("- saving PNG preview... ");
 		PGraphics preview = createGraphics(w, h);
 		preview.beginDraw();
 			preview.background(255);
-			preview.image(appGraphics, -x, -y);
+			preview.image(screenImage, -x, -y);
 		preview.endDraw();
 		preview.save("output/" + filename + ".png");
-		println("done!");
-	}
-	
-	void saveImageData(String filename) {
-		print("writing data file... ");
-		
-		// JSONArray cellArray = getBlackoutCellArray();
-		// JSONArray graphicsArray = getGraphicSetsArray();
-		
-		// JSONObject obj = new JSONObject();
-		// obj.setJSONArray("blackoutCells", cellArray);
-		// obj.setFloat("printWidthInches", PRINT_W_INCHES);
-		// obj.setFloat("printHeightInches", PRINT_H_INCHES);
-		// obj.setInt("printResolution", PRINT_RESOLUTION);
-		// obj.setInt("gridWidth", GRID_W);
-		// obj.setInt("gridHeight", GRID_H);
-		// obj.setFloat("marginInches", MARGIN_INCHES);
-		// obj.setBoolean("useTwists", useTwists);
-		// obj.setBoolean("useJoiners", useJoiners);
-		// obj.setBoolean("allowOverlap", allowOverlap);
-		// obj.setFloat("noodleThicknessPct", noodleThicknessPct);
-		// obj.setInt("numNoodles", numNoodles);
-		// obj.setInt("minLength", minLength);
-		// obj.setInt("maxLength", maxLength);
-		// obj.setJSONArray("graphics", graphicsArray);
-		// obj.setBoolean("randomizeEnds", randomizeEnds);
-		// saveJSONObject(obj, "output/" + filename + ".json");
-		// // saveJSONArray(layersArray, "output/" + filename + ".json");
 		println("done!");
 	}
 	
@@ -170,7 +133,6 @@ class ImageSaver {
 		        lines[i] = m2.replaceAll("height=\"" + hInches + "in\" viewBox=\"0 0 " + wPx + " " + hPx + "\"");
 			}
 		}
-		
 		saveStrings("output/" + filename + ".svg", lines);
 		println("done!");
 	}

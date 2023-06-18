@@ -81,7 +81,7 @@ void draw() {
     imgSaver.startSave();
     sketch.draw(strokeWeight);
 
-    imgSaver.endSave(this.g, canvasX, canvasY, canvasW, canvasH); 
+    imgSaver.endSave(get(), canvasX, canvasY, canvasW, canvasH); 
 }
 
 float calculateStrokeSize() {
