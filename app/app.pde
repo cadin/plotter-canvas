@@ -1,9 +1,9 @@
 import processing.svg.*;
 
-int canvasX = 0;
-int canvasY = 0;
-int canvasW = 0;
-int canvasH = 0;
+int canvasXPx = 0;
+int canvasYPx = 0;
+int canvasWPx = 0;
+int canvasHPx = 0;
 
 float maxScreenScale;
 float screenScale; 
@@ -20,13 +20,19 @@ ImageSaver imgSaver;
 GraphPaper grid;
 boolean showGrid = false;
 
-int plotW;
-int plotH;
-int plotX;
-int plotY;
+int plotWPx;
+int plotHPx;
+int plotXPx;
+int plotYPx;
 
 float plotWInches;
 float plotHInches;
+
+float maxPlotWInches;
+float maxPlotHInches;
+
+int mouseCanvasX = 0;
+int mouseCanvasY = 0;
 
 
 void settings() {
@@ -48,8 +54,11 @@ void setup() {
     printWInches = printW;
     printHInches = printH;
 
+    maxPlotWInches = maxPlotW;
+    maxPlotHInches = maxPlotH;
+
     updateKeyDimensions();
-    sketch = new Sketch(plotW, plotH, printResolution * screenScale);
+    sketch = new Sketch(plotWPx, plotHPx, printResolution * screenScale);
 
     imgSaver = new ImageSaver();
     imgSaver.savePNG = savePNGPreview;
@@ -62,26 +71,26 @@ void updateKeyDimensions() {
     strokeWeight = calculateStrokeSize();
 
     println("page size: " + printWInches + " ✕ " + printHInches + " inches");
-    println("scaled to: " + canvasW + " ✕ " + canvasH + " pixels\n");
+    println("scaled to: " + canvasWPx + " ✕ " + canvasHPx + " pixels\n");
 
-    grid = new GraphPaper(maxPlotW, maxPlotH, printWInches, printHInches, printResolution * screenScale);
+    grid = new GraphPaper(maxPlotWInches, maxPlotHInches, printWInches, printHInches, printResolution * screenScale);
     if(sketch != null){
-        sketch.setDimensions(plotW, plotH, printResolution * screenScale);
+        sketch.setDimensions(plotWPx, plotHPx, printResolution * screenScale);
     }
 }
 
 
 void draw() {
     drawBG();
-    translate(canvasX, canvasY);
+    translate(canvasXPx, canvasYPx);
 
     if(showGrid) grid.draw();
 
-    translate(plotX, plotY);
+    translate(plotXPx, plotYPx);
     imgSaver.startSave();
     sketch.draw(strokeWeight);
 
-    imgSaver.endSave(get(), canvasX, canvasY, canvasW, canvasH); 
+    imgSaver.endSave(get(), canvasXPx, canvasYPx, canvasWPx, canvasHPx); 
 }
 
 float calculateStrokeSize() {
@@ -94,64 +103,64 @@ void calculateScreenScale() {
     float maxW = width - 100;
     float maxH = height - 100;
     
-    float _printW = printWInches * printResolution;
-    float _printH = printHInches * printResolution;
+    float _printWPx = printWInches * printResolution;
+    float _printHPx = printHInches * printResolution;
 
-    screenScale = maxW / _printW;
+    screenScale = maxW / _printWPx;
     
-    if(_printH * screenScale > maxH){
-        screenScale = maxH / _printH;
+    if(_printHPx * screenScale > maxH){
+        screenScale = maxH / _printHPx;
     }
     
     if(screenScale > maxScreenScale){
         screenScale = maxScreenScale;
     }
     
-    canvasW = int(printWInches * printResolution * screenScale);
-    canvasH = int(printHInches * printResolution * screenScale);
+    canvasWPx = int(printWInches * printResolution * screenScale);
+    canvasHPx = int(printHInches * printResolution * screenScale);
     
-    canvasX = (width - canvasW) /2;
-    canvasY = (height - canvasH) /2;
+    canvasXPx = (width - canvasWPx) /2;
+    canvasYPx = (height - canvasHPx) /2;
 }
 
 void calculatePlotArea() {
     if(constrainToPlotArea){
-        float mpw = maxPlotW;
-        float mph = maxPlotH;
+        float mpw = maxPlotWInches;
+        float mph = maxPlotHInches;
         if(printWInches < printHInches){
             // portrait
-            mpw = maxPlotH;
-            mph = maxPlotW;
+            mpw = maxPlotHInches;
+            mph = maxPlotWInches;
         }
 
         plotWInches = min(printWInches, mpw);
         plotHInches = min(printHInches, mph);
 
-        plotW = int(plotWInches * printResolution * screenScale);
-        plotH = int(plotHInches * printResolution * screenScale);
+        plotWPx = int(plotWInches * printResolution * screenScale);
+        plotHPx = int(plotHInches * printResolution * screenScale);
 
-        plotX = (canvasW - plotW) / 2;
-        plotY = (canvasH - plotH) / 2;
+        plotXPx = (canvasWPx - plotWPx) / 2;
+        plotYPx = (canvasHPx - plotHPx) / 2;
     } else {
-        plotW = canvasW;
-        plotH = canvasH;
+        plotWPx = canvasWPx;
+        plotHPx = canvasHPx;
 
         plotWInches = printWInches;
         plotHInches = printHInches;
 
-        plotX = 0;
-        plotY = 0;
+        plotXPx = 0;
+        plotYPx = 0;
     }
 }
 
 void drawPaperBG() {
     stroke(80);
     strokeWeight(4);
-    rect(canvasX, canvasY, canvasW, canvasH);
+    rect(canvasXPx, canvasYPx, canvasWPx, canvasHPx);
 
     fill(255);
     noStroke();
-    rect(canvasX, canvasY, canvasW, canvasH);
+    rect(canvasXPx, canvasYPx, canvasWPx, canvasHPx);
 }
 
 void drawBG() {
@@ -170,14 +179,21 @@ void drawSaveIndicator() {
 }
 
 void saveImage() {
-    int _plotW = plotW;
-    int _plotH = plotH;
+    int _plotWPx = plotWPx;
+    int _plotHPx = plotHPx;
     if(useRetinaDisplay){
-        _plotW *= 2;
-        _plotH *= 2;
+        _plotWPx *= 2;
+        _plotHPx *= 2;
     }
 
-    imgSaver.begin(plotWInches, plotHInches, _plotW , _plotH);
+    imgSaver.begin(plotWInches, plotHInches, _plotWPx , _plotHPx);
+}
+
+void mousePressed() {
+	mouseCanvasX = mouseX - canvasX;
+	mouseCanvasY = mouseY - canvasY;
+
+	sketch.mousePressed();
 }
 
 void keyPressed() {

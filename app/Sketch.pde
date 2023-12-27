@@ -23,4 +23,9 @@ class Sketch {
     void keyPressed() {
         // keyPressed events get forwarded from main applet
     }
+
+    void mousePressed() {
+        // mousePressed events get forwarded from main applet
+        // use mouseCanvasX and mouseCanvasY to get canvas coordinates
+    }
 }
