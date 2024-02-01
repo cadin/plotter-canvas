@@ -190,8 +190,8 @@ void saveImage() {
 }
 
 void mousePressed() {
-	mouseCanvasX = mouseX - canvasX;
-	mouseCanvasY = mouseY - canvasY;
+	mouseCanvasX = mouseX - canvasXPx;
+	mouseCanvasY = mouseY - canvasYPx;
 
 	sketch.mousePressed();
 }
