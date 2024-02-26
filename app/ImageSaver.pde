@@ -1,6 +1,19 @@
 import java.util.regex.Pattern; 
 import java.util.regex.Matcher;
 
+enum SaveState {
+	NONE, 
+	BEGAN, 
+	SAVING, 
+	COMPLETE, 
+	RENDER_BEGAN, 
+	RENDERING
+}
+
+enum SaveMode {
+	SVG, PNG
+}
+
 class ImageSaver {
 
 	SaveState state = SaveState.NONE;
@@ -150,4 +163,3 @@ class ImageSaver {
 		return n;
 	}
 }
-
