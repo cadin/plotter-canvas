@@ -57,8 +57,9 @@ void setup() {
     maxPlotWInches = maxPlotW;
     maxPlotHInches = maxPlotH;
 
+    sketch = new Sketch();
     updateKeyDimensions();
-    sketch = new Sketch(plotWPx, plotHPx, printResolution * screenScale);
+    // sketch = new Sketch(plotWPx, plotHPx, printResolution * screenScale);
 
     imgSaver = new ImageSaver();
     imgSaver.savePNG = savePNGPreview;
@@ -75,7 +76,7 @@ void updateKeyDimensions() {
 
     grid = new GraphPaper(maxPlotWInches, maxPlotHInches, printWInches, printHInches, printResolution * screenScale);
     if(sketch != null){
-        sketch.setDimensions(plotWPx, plotHPx, printResolution * screenScale);
+        sketch.setDimensions(plotWPx, plotHPx, printResolution * screenScale, strokeWeight);
     }
 }
 
@@ -88,7 +89,8 @@ void draw() {
 
     translate(plotXPx, plotYPx);
     imgSaver.startSave();
-    sketch.draw(strokeWeight);
+    strokeWeight(strokeWeight);
+    sketch.draw();
 
     imgSaver.endSave(get(), canvasXPx, canvasYPx, canvasWPx, canvasHPx); 
 }
