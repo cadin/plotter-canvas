@@ -59,9 +59,9 @@ class ImageSaver {
 	
 	boolean isBusy() {
 		return state == SaveState.BEGAN || 
-		       state == SaveState.SAVING || 
-		       state == SaveState.RENDER_BEGAN || 
-		       state == SaveState.RENDERING;
+			   state == SaveState.SAVING || 
+			   state == SaveState.RENDER_BEGAN || 
+			   state == SaveState.RENDERING;
 	}
 	
 	void begin(float _printW, float _printH, int _canvasW, int _canvasH) {
@@ -125,12 +125,12 @@ class ImageSaver {
 			if(l.length() > 4 && l.substring(0, 4).equals("<svg")){
 				print(" found SVG tag... ");
 				Pattern p = Pattern.compile("width=\"([0-9]+)\"");
-		        Matcher m = p.matcher(l);
-		        l = m.replaceAll("width=\"" + wInches + "in\"");
-		        
-		        Pattern p2 = Pattern.compile("height=\"([0-9]+)\"");
-		        Matcher m2 = p2.matcher(l);
-		        lines[i] = m2.replaceAll("height=\"" + hInches + "in\" viewBox=\"0 0 " + wPx + " " + hPx + "\"");
+				Matcher m = p.matcher(l);
+				l = m.replaceAll("width=\"" + wInches + "in\"");
+				
+				Pattern p2 = Pattern.compile("height=\"([0-9]+)\"");
+				Matcher m2 = p2.matcher(l);
+				lines[i] = m2.replaceAll("height=\"" + hInches + "in\" viewBox=\"0 0 " + wPx + " " + hPx + "\"");
 			}
 		}
 		saveStrings("output/" + filename + ".svg", lines);

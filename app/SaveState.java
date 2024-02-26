@@ -8,5 +8,5 @@ enum SaveState {
 }
 
 enum SaveMode {
-    SVG, PNG
+	SVG, PNG
 }
