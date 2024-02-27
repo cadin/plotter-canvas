@@ -90,6 +90,7 @@ void draw() {
 	translate(plotXPx, plotYPx);
 	imgSaver.startSave();
 	strokeWeight(strokeWeight);
+	stroke(0);
 	sketch.draw();
 
 	imgSaver.endSave(get(), canvasXPx, canvasYPx, canvasWPx, canvasHPx); 

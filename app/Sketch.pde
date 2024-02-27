@@ -2,7 +2,7 @@ class Sketch {
 	int w; // width in pixels
 	int h; // height in pixels
 	float ppi; // pixels per inch of printed doc
-	float strokeWeight;
+	float strokeWeight; // the scaled stroke weight for the sketch
 
 	Sketch(){}
 
@@ -15,7 +15,6 @@ class Sketch {
 
 	void draw() {
 		// replace this with custom sketch drawing code
-		stroke(0);
 		rect(ppi, ppi, ppi, ppi);
 	}
 
