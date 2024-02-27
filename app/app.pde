@@ -19,6 +19,7 @@ ImageSaver imgSaver;
 
 GraphPaper grid;
 boolean showGrid = false;
+boolean showUI = false;
 
 int plotWPx;
 int plotHPx;
@@ -34,6 +35,10 @@ float maxPlotHInches;
 int mouseCanvasX = 0;
 int mouseCanvasY = 0;
 
+Field printWField;
+Field printHField;
+Field focusedField;
+String fieldStringVal = "";
 
 void settings() {
 	
@@ -63,6 +68,9 @@ void setup() {
 
 	imgSaver = new ImageSaver();
 	imgSaver.savePNG = savePNGPreview;
+
+	printWField = new Field(10, 10, printWInches, "W");
+	printHField = new Field(72, 10, printHInches, "H");
 }
 
 
@@ -83,10 +91,12 @@ void updateKeyDimensions() {
 
 void draw() {
 	drawBG();
+	if(showUI) drawUI();
 	translate(canvasXPx, canvasYPx);
 
 	if(showGrid) grid.draw();
 
+	
 	translate(plotXPx, plotYPx);
 	imgSaver.startSave();
 	strokeWeight(strokeWeight);
@@ -181,6 +191,12 @@ void drawSaveIndicator() {
 	popMatrix();
 }
 
+void drawUI() {
+	printWField.draw();
+	printHField.draw();
+	noFill();
+}
+
 void saveImage() {
 	int _plotWPx = plotWPx;
 	int _plotHPx = plotHPx;
@@ -192,20 +208,71 @@ void saveImage() {
 	imgSaver.begin(plotWInches, plotHInches, _plotWPx , _plotHPx);
 }
 
+void focusField(Field f) {
+	f.focus();
+	focusedField = f;
+	fieldStringVal = "";
+}
+
 void mousePressed() {
+	if(printWField.mouseIsOver()) {
+		if(printWField.focused){
+			printWInches = printWField.blur();
+		} else {
+			printHInches = printHField.blur();
+			focusField(printWField);
+		}
+		updateKeyDimensions();
+	} else if(printHField.mouseIsOver()) {
+		if(printHField.focused){
+			printHInches = printHField.blur();
+		} else {
+			printWInches = printWField.blur();
+			focusField(printHField);
+		}
+		updateKeyDimensions();
+	}
+
 	mouseCanvasX = mouseX - canvasXPx;
 	mouseCanvasY = mouseY - canvasYPx;
 
 	sketch.mousePressed();
 }
 
+void handleFieldInput() {
+	if((key >= 48 && key <= 57) || key == '.') {
+		fieldStringVal += key;	
+	}
+
+	if(keyCode == BACKSPACE){
+		fieldStringVal = fieldStringVal.substring(0, max(0, fieldStringVal.length() - 1));
+	}
+
+	focusedField.setStringValue(fieldStringVal);
+
+	if(keyCode == ENTER || keyCode == RETURN) {
+		if(printWField.focused){
+			printWInches = printWField.blur();
+		} else if(printHField.focused){
+			printHInches = printHField.blur();
+		}
+		updateKeyDimensions();
+	}
+}
+
+
 void keyPressed() {
+	if(printWField.focused || printHField.focused){
+		handleFieldInput();
+	}
+
 	switch(key) {
 		case 's' :
 			saveImage();
 		break;
 		case 'g': 
 			showGrid = !showGrid;
+			showUI = !showUI;
 		break;
 	}
 

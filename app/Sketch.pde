@@ -15,7 +15,7 @@ class Sketch {
 
 	void draw() {
 		// replace this with custom sketch drawing code
-		rect(ppi, ppi, ppi, ppi);
+		rect((w -ppi) / 2, (h - ppi) / 2, ppi, ppi);
 	}
 
 	void keyPressed() {
