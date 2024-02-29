@@ -1,7 +1,7 @@
 // some helpful constants 
 
 // SCREEN SCALES
-// helps scale canvas to be 1:1 at smaller sizes
+// helps scale canvas to appear 1:1 on screen
 float MACBOOK_15_SCALE = 0.4912;
 float MACBOOK_13_SCALE = 0.5;
 float LG_DISPLAY_SCALE = 0.366;

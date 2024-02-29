@@ -9,7 +9,7 @@ class Sketch extends PlotterCanvas {
 	Sketch(){}
 
 	void draw() {
-		// replace this with custom sketch drawing code
+		// replace this with your custom sketch drawing code
 		rect((w - ppi) / 2, (h - ppi) / 2, ppi, ppi);
 	}
 
