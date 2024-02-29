@@ -215,6 +215,17 @@ void focusField(Field f) {
 }
 
 void mousePressed() {
+	if(printWField.mouseIsOver() || printHField.mouseIsOver()) {
+		handleFieldClick();
+	}
+
+	mouseCanvasX = mouseX - canvasXPx;
+	mouseCanvasY = mouseY - canvasYPx;
+
+	sketch.mousePressed();
+}
+
+void handleFieldClick() {
 	if(printWField.mouseIsOver()) {
 		if(printWField.focused){
 			printWInches = printWField.blur();
@@ -222,21 +233,15 @@ void mousePressed() {
 			printHInches = printHField.blur();
 			focusField(printWField);
 		}
-		updateKeyDimensions();
-	} else if(printHField.mouseIsOver()) {
+	} else {
 		if(printHField.focused){
 			printHInches = printHField.blur();
 		} else {
 			printWInches = printWField.blur();
 			focusField(printHField);
 		}
-		updateKeyDimensions();
 	}
-
-	mouseCanvasX = mouseX - canvasXPx;
-	mouseCanvasY = mouseY - canvasYPx;
-
-	sketch.mousePressed();
+	updateKeyDimensions();
 }
 
 void handleFieldInput() {

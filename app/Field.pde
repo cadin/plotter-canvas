@@ -50,6 +50,7 @@ class Field {
 
 	void focus() {
 		focused = true;
+		stringValue = "";
 	}
 
 	float blur() {
@@ -59,6 +60,7 @@ class Field {
 	}
 
 	void trimStringVal(float v) {
+		stringValue = str(v);
 		// trim trailing zeros
 		if(stringValue.indexOf(".") > 0){
 			stringValue = stringValue.replaceAll("0*$", "");
