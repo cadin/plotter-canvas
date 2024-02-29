@@ -1,8 +1,8 @@
 class Sketch extends PlotterCanvas {
-	// vars available in the Sketch:
+	// vars available in this Sketch:
 
 	// int w, h;                       -- width & height in pixels
-	// float ppi;                      -- pixels per inch of current canvas
+	// float screenScale, ppi;         -- the scale factor and pixels per inch of current canvas
 	// float strokeWeight;             -- the scaled stroke weight for the sketch
 	// int canvasMouseX, canvasMouseY; -- mouse position in canvas coordinates
 
@@ -10,7 +10,7 @@ class Sketch extends PlotterCanvas {
 
 	void draw() {
 		// replace this with custom sketch drawing code
-		rect((w -ppi) / 2, (h - ppi) / 2, ppi, ppi);
+		rect((w - ppi) / 2, (h - ppi) / 2, ppi, ppi);
 	}
 
 	void mousePressed() {

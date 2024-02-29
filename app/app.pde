@@ -64,7 +64,6 @@ void setup() {
 
 	sketch = new Sketch();
 	updateKeyDimensions();
-	// sketch = new Sketch(plotWPx, plotHPx, printResolution * screenScale);
 
 	imgSaver = new ImageSaver();
 	imgSaver.savePNG = savePNGPreview;
@@ -84,7 +83,7 @@ void updateKeyDimensions() {
 
 	grid = new GraphPaper(maxPlotWInches, maxPlotHInches, printWInches, printHInches, printResolution * screenScale);
 	if(sketch != null){
-		sketch.setDimensions(plotWPx, plotHPx, printResolution * screenScale, strokeWeight);
+		sketch.setDimensions(plotWPx, plotHPx, screenScale, printResolution * screenScale, strokeWeight);
 	}
 }
 
@@ -96,7 +95,6 @@ void draw() {
 
 	if(showGrid) grid.draw();
 
-	
 	translate(plotXPx, plotYPx);
 	imgSaver.startSave();
 	strokeWeight(strokeWeight);
@@ -180,7 +178,6 @@ void drawBG() {
 	background(100);
 	if(imgSaver.isBusy()){ drawSaveIndicator();}
 	drawPaperBG();
-	
 }
 
 void drawSaveIndicator() {
@@ -266,11 +263,8 @@ void handleFieldInput() {
 	focusedField.setStringValue(fieldStringVal);
 
 	if(keyCode == ENTER || keyCode == RETURN) {
-		if(printWField.focused){
-			printWInches = printWField.blur();
-		} else if(printHField.focused){
-			printHInches = printHField.blur();
-		}
+		printWInches = printWField.blur();
+		printHInches = printHField.blur();
 		updateKeyDimensions();
 	}
 }
@@ -454,9 +448,9 @@ class ImageSaver {
 	
 	boolean isBusy() {
 		return state == SaveState.BEGAN || 
-			   state == SaveState.SAVING || 
-			   state == SaveState.RENDER_BEGAN || 
-			   state == SaveState.RENDERING;
+		       state == SaveState.SAVING || 
+		       state == SaveState.RENDER_BEGAN || 
+		       state == SaveState.RENDERING;
 	}
 	
 	void begin(float _printW, float _printH, int _canvasW, int _canvasH) {
@@ -622,5 +616,4 @@ class Field {
 	boolean mouseIsOver() {
 		return mouseX > x && mouseX < x + 50 && mouseY > y && mouseY < y + 20;
 	}
-
 }
