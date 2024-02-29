@@ -294,6 +294,12 @@ void keyPressed() {
 	sketch.keyPressed();
 }
 
+void mouseReleased(){
+	sketch.mouseReleased();
+}
+void keyReleased() {
+	sketch.keyReleased();
+}
 
 // ----------------------------------------
 // GRAPH PAPER
