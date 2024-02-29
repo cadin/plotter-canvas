@@ -217,12 +217,22 @@ void focusField(Field f) {
 void mousePressed() {
 	if(printWField.mouseIsOver() || printHField.mouseIsOver()) {
 		handleFieldClick();
+	} else {
+		handleSketchClick();
 	}
 
 	mouseCanvasX = mouseX - canvasXPx;
 	mouseCanvasY = mouseY - canvasYPx;
 
 	sketch.mousePressed();
+}
+
+void handleSketchClick() {
+	if(printWField.focused || printHField.focused){
+		printWInches = printWField.blur();
+		printHInches = printHField.blur();
+		updateKeyDimensions();
+	}
 }
 
 void handleFieldClick() {
