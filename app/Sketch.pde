@@ -4,7 +4,7 @@ class Sketch extends PlotterCanvas {
 	// int w, h;                       -- width & height in pixels
 	// float ppi;                      -- pixels per inch of current canvas
 	// float strokeWeight;             -- the scaled stroke weight for the sketch
-	// int mouseCanvasX, mouseCanvasY; -- mouse position in canvas coordinates
+	// int canvasMouseX, canvasMouseY; -- mouse position in canvas coordinates
 
 	Sketch(){}
 
@@ -15,7 +15,7 @@ class Sketch extends PlotterCanvas {
 
 	void mousePressed() {
 		// mousePressed events get forwarded from main applet
-		// use mouseCanvasX and mouseCanvasY to get canvas coordinates
+		// use canvasMouseX and canvasMouseY to get canvas coordinates
 	}
 
 	// you can use these common functions too

@@ -32,8 +32,8 @@ float plotHInches;
 float maxPlotWInches;
 float maxPlotHInches;
 
-int mouseCanvasX = 0;
-int mouseCanvasY = 0;
+int canvasMouseX = 0;
+int canvasMouseY = 0;
 
 Field printWField;
 Field printHField;
@@ -221,8 +221,8 @@ void mousePressed() {
 		handleSketchClick();
 	}
 
-	mouseCanvasX = mouseX - canvasXPx;
-	mouseCanvasY = mouseY - canvasYPx;
+	canvasMouseX = mouseX - canvasXPx;
+	canvasMouseY = mouseY - canvasYPx;
 
 	sketch.mousePressed();
 }
