@@ -10,7 +10,7 @@ float screenScale;
 float penSizeMM;
 float printWInches;
 float printHInches;
-int printResolution = 72;
+int printResolution = 144;
 float marginInches = 0;	
 float strokeWeight;
 
@@ -79,7 +79,7 @@ void updateKeyDimensions() {
 	strokeWeight = calculateStrokeSize();
 
 	println("page size: " + printWInches + " ✕ " + printHInches + " inches");
-	println("scaled to: " + canvasWPx + " ✕ " + canvasHPx + " pixels\n");
+	println("scaled to: " + canvasWPx + " ✕ " + canvasHPx + " pixels (" + screenScale + " scale)\n ");
 
 	grid = new GraphPaper(maxPlotWInches, maxPlotHInches, printWInches, printHInches, printResolution * screenScale);
 	if(sketch != null){
@@ -98,7 +98,9 @@ void draw() {
 	translate(plotXPx, plotYPx);
 	imgSaver.startSave();
 	strokeWeight(strokeWeight);
+	
 	stroke(0);
+	noFill();
 	sketch.draw();
 
 	imgSaver.endSave(get(), canvasXPx, canvasYPx, canvasWPx, canvasHPx); 
