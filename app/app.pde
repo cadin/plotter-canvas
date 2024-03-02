@@ -98,7 +98,7 @@ void draw() {
 	translate(plotXPx, plotYPx);
 	imgSaver.startSave();
 	strokeWeight(strokeWeight);
-	
+
 	stroke(0);
 	noFill();
 	sketch.draw();
@@ -618,4 +618,37 @@ class Field {
 	boolean mouseIsOver() {
 		return mouseX > x && mouseX < x + 50 && mouseY > y && mouseY < y + 20;
 	}
+}
+
+// ----------------------------------------
+// PLOTTER CANVAS
+// ----------------------------------------
+
+// Sketch extends this
+// I only did this to hide the boilerplate from the Sketch file
+class PlotterCanvas {
+	int w; // width in pixels
+	int h; // height in pixels
+	float ppi; // pixels per inch of printed doc
+	float strokeWeight; // the scaled stroke weight for the sketch
+	float screenScale; // the scale factor for the canvas
+
+	PlotterCanvas() {}
+
+	// this gets called whenever the canvas size changes
+	// you can override it in Sketch, but make sure to call super
+	void setDimensions(int _w, int _h, float _screenScale, float _ppi, float _strokeWeight) {
+		w = _w;
+		h = _h;
+		screenScale = _screenScale;
+		ppi = _ppi;
+		strokeWeight = _strokeWeight;
+	}
+
+	// these all get overridden in the Sketch
+	void draw() {}
+	void mousePressed() {}
+	void mouseReleased() {}
+	void keyPressed() {}
+	void keyReleased() {}
 }
