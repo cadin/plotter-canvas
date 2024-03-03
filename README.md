@@ -6,6 +6,8 @@ This projects runs full screen (optional) with a proportional canvas showing you
 
 ## Getting Started
 
+### 📺 [Video Walkthrough](https://youtu.be/P2iipcsJoCA)
+
 ### Requirements
 
 - [Processing 4](https://processing.org/download)
